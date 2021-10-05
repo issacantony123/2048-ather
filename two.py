@@ -61,11 +61,13 @@ def process_row(r):     #process a row
     return won ,final_r     # return the won flag along with the final row
 
 def left(x):        #processing a direction
-    for row in range(4):
-        win, temp = process_row(x[row])  # process each row with and take up the won status
-        x[row] = temp   # update the row in original matrix
+    win_flag = False         #processing a direction
+    for row in range(4): # process each row with and take up the won status
+        win, temp = process_row(x[row])
+        if win:
+            win_flag = True
     
-    return win, x #return win status and the processed matrix
+    return win_flag, x #return win status and the processed matrix
 
 
 # arr = [[0]*4]*4
@@ -81,9 +83,9 @@ while(flag):
     print_matrix(nump_arr) # print the matrix
     dir = int(input()) # input direction
     print("\n")
-    clear = lambda: os. system('cls') 
-    clear() # can be commented to see the matrix flow
-    print("\n")
+#     clear = lambda: os. system('cls') 
+#     clear() # can be commented to see the matrix flow
+#     print("\n")
 
     if(dir == 1):
         w, nump_arr_result = left(nump_arr) #call left function and take the win status
