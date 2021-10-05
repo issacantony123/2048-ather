@@ -66,7 +66,7 @@ def left(x):        #processing a direction
         win, temp = process_row(x[row])
         if win:
             win_flag = True
-    
+        x[row] = temp
     return win_flag, x #return win status and the processed matrix
 
 
