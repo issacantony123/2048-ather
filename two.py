@@ -28,7 +28,19 @@ def fill_random(mat):       #fill the given matrix with 2 or 4 randomly in empty
 
 
 def print_matrix(mat):  #for printing mat in a formatted way
-    s = [[str(e) for e in row] for row in mat]
+    # s = [[str(e) for e in row] for row in mat]
+    # print(s)
+    s = []
+    for row in mat:
+        temp = []
+        for col in row:
+            if col == 0:
+                temp.append('_')
+            else:
+                temp.append(str(col))
+        s.append(temp)
+
+
     lens = [max(map(len, col)) for col in zip(*s)]
     fmt = '\t'.join('{{:{}}}'.format(x) for x in lens)
     table = [fmt.format(*row) for row in s]
@@ -54,6 +66,7 @@ def process_row(r):     #process a row
     for c in temp_r:
         if c == 2048: # check simultaneously each cell if it is 2048
             won = True
+            # break #
 
         if c!=0:
             final_r[i] = c  #for shrinking the row once again
@@ -70,22 +83,22 @@ def left(x):        #processing a direction
     return win_flag, x #return win status and the processed matrix
 
 
-# arr = [[0]*4]*4
-arr = [[1024,1024,8,16],[16,8,4,2],[2,4,8,16],[16,8,4,2]]
+arr = [[0]*4]*4
+# arr = [[512,512,1024,16],[16,8,4,2],[2,4,8,16],[16,8,4,2]]
 # arr = [[2,0,4,4],[0,0,0,0],[0,0,4,0],[2,0,4,0]]
 nump_arr = np.array(arr) #made it numpy for using transpose
 
 f, nump_arr = fill_random(nump_arr) #fill two random values initially
 f, nump_arr = fill_random(nump_arr)
 flag = True
-
+print_matrix(nump_arr)
 while(flag): 
-    print_matrix(nump_arr) # print the matrix
+    # print_matrix(nump_arr) # print the matrix
     dir = int(input()) # input direction
-    print("\n")
-#     clear = lambda: os. system('cls') 
-#     clear() # can be commented to see the matrix flow
-#     print("\n")
+    # print("\n")
+    clear = lambda: os.system('cls') 
+    clear() # can be commented to see the matrix flow
+    # print("\n")
 
     if(dir == 1):
         w, nump_arr_result = left(nump_arr) #call left function and take the win status
@@ -105,12 +118,20 @@ while(flag):
         nump_arr_result = np.transpose(nump_arr_temp)   #again take transpose
         nump_arr_result = np.flip(nump_arr_result,0) #again flip to get the final down transformation
 
+    # print_matrix(nump_arr)
     # print(w)
-    if(w == True):
+    flag, nump_arr = fill_random(nump_arr_result)
+    print('\n')
+    print_matrix(nump_arr)
+    # print(nump_arr[0])
+    if w == True:
+        # print_matrix(nump_arr)
         print("You Won") # if returned win status is true
+        # print(nump_arr[0])
         break
 
-    flag, nump_arr = fill_random(nump_arr_result) #fill the empty slot
+     #fill the empty slot
+    
     if(flag == False): #if not place to fill 2 or 4 then game over
         print("Game Over")
         break
